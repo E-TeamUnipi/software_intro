@@ -101,7 +101,8 @@ collegata alla temperatura dell'acqua misurata attraverso il modello termico.
 Si consiglia di partire dalla lettura di `hal.h`, `sb.h` e `vcu.h`
 
 ### Misura della temperatura
-Si suppone di utilizzare un sensore di tipo `a` e un partitore con resistenza di 1k.
+Si suppone di utilizzare una termocoppia di tipo [PT100 classe B](https://it.omega.com/prodinfo/pt100.html)
+(ad esempio, [questa](https://amironic.co.il/wp-content/uploads/ETP-AM-SP-100-PT.pdf)) e un partitore con resistenza di 1k.
 Chiedere a un elettronico la relazione tra la temperatura e la tensione misurata, che
 andrà poi invertita per ottenere la temperatura da inviare sul CAN.
 La lettura della temperatura triggera `hal_analog_sensor_conversion_ready`
