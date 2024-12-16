@@ -47,7 +47,7 @@ void current_control_loop(void* d) {
     (void) d;
     struct main_iq_cmd_t data;
 
-    float current = (float)pps / 100.0f * 80.f;
+    float current = (float)pps / 100.0f * 114.f;
     if (pps_status != MAIN_PPS_PPS_STATUS_OK_CHOICE) {
         current = 0.0f;
     }
@@ -64,6 +64,7 @@ void current_control_loop(void* d) {
 
 void temp_control_loop(void* d) {
     (void) d;
+    const uint16_t max_fan_speed_rpm = 2000;
 
     // TODO:1) scegliere la velocità della ventola in base a water_temp
     //      2) mandare un messaggio alla scheda di attuazione della ventola

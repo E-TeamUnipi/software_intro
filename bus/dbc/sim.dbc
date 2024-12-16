@@ -43,6 +43,9 @@ BO_ 13 SIM_pps_sensors: 4 SIM
 BO_ 29 SIM_cooling_sensors: 2 SIM
  SG_ thermocouple : 0|13@1+ (1,0) [0|5000] "mV"  SB2
 
+BO_ 37 SIM_inverter_temp: 2 SIM
+ SG_ temp : 0|11@1+ (0.1,0) [0|120] "C" Vector__XXX
+
 BO_ 19 COOLING_CTRL_fan_ctrl: 1 COOLING_CTRL
  SG_ fan_pwm_duty : 0|7@1+ (1,0) [0|100] "%"  SIM
 
@@ -54,10 +57,13 @@ CM_ SG_ 13 pps_inv "inverting PPS voltage";
 CM_ SG_ 13 pps "non-inverting PPS voltage";
 CM_ BO_ 29 "thermocouple voltage";
 CM_ SG_ 29 thermocouple "Voltage on the thermocouple end";
+CM_ BO_ 37 "Inverter temperature message for diagnostics";
+CM_ SG_ 37 temp "Inverter temperature";
 CM_ BO_ 19 "fan pwm control";
 CM_ SG_ 19 fan_pwm_duty "fan PWM duty cycle";
 BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
 BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 37 500;
 BA_ "GenMsgCycleTime" BO_ 19 100;
 
 

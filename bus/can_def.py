@@ -12,6 +12,7 @@ class VMsgId(IntEnum):
     PPS = auto()
     COOLING_ACTUATION = auto()
     COOLING_SENSORS = auto()
+    INVERTER_TEMP = auto()
 
 class NodeId(IntEnum):
     VCU = 0
@@ -147,6 +148,23 @@ simulator_messages = [
                 'range': (0, 5000),
                 'unit': 'mV',
                 'comment': 'Voltage on the thermocouple end',
+            },
+        ]
+    },
+    {
+        'name': 'inverter_temp',
+        'senders': [NodeId.SIM],
+        'receivers': [],
+        'message_id': VMsgId.INVERTER_TEMP,
+        'comment': 'Inverter temperature message for diagnostics',
+        'cycle_time': 500,
+        'signals': [
+            {
+                'name': 'temp',
+                'scale': 0.1,
+                'range': (0, 120),
+                'unit': 'C',
+                'comment': 'Inverter temperature',
             },
         ]
     },
