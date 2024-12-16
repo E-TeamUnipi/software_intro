@@ -1,0 +1,72 @@
+VERSION "0.0.1"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: VCU SB1 SB2 COOLING_CTRL INVERTER SIM
+
+
+BO_ 16 VCU_iq_cmd: 2 VCU
+ SG_ iq_rms : 0|11@1+ (0.1,0) [0|200] "Arms"  INVERTER
+
+BO_ 24 VCU_fan_ctrl: 2 VCU
+ SG_ fan_speed : 0|11@1+ (1,0) [0|2000] "rpm"  COOLING_CTRL
+
+BO_ 1 SB1_pps: 2 SB1
+ SG_ pps_status : 7|3@1+ (1,0) [0|4] ""  VCU
+ SG_ pps : 0|7@1+ (1,0) [0|100] "%"  VCU
+
+BO_ 10 SB2_cooling_data: 1 SB2
+ SG_ water_temperature : 0|7@1+ (1,0) [0|100] "°C"  VCU
+
+
+
+
+CM_ BO_ 16 "Quadrature current command";
+CM_ SG_ 16 iq_rms "RMS value of quadrature current";
+CM_ BO_ 24 "fan speed setting";
+CM_ SG_ 24 fan_speed "fan speed in rpm";
+CM_ BO_ 1 "pedal position reading";
+CM_ SG_ 1 pps_status "pps failure status";
+CM_ SG_ 1 pps "percent pedal position";
+CM_ BO_ 10 "data from cooling plant";
+CM_ SG_ 10 water_temperature "Water temperature in cooling plant";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 24 100;
+BA_ "GenMsgCycleTime" BO_ 1 20;
+BA_ "GenMsgCycleTime" BO_ 10 50;
+VAL_ 1 pps_status 0 "ok" 1 "ninv_fault" 2 "inv_fault" 3 "uncorrelated_fault" ;
+
+
+
