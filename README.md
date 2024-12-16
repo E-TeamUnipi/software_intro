@@ -104,6 +104,8 @@ Si consiglia di partire dalla lettura di `hal.h`, `sb.h` e `vcu.h`
 Si suppone di utilizzare un sensore di tipo `a` e un partitore con resistenza di 1k.
 Chiedere a un elettronico la relazione tra la temperatura e la tensione misurata, che
 andrà poi invertita per ottenere la temperatura da inviare sul CAN.
+La lettura della temperatura triggera `hal_analog_sensor_conversion_ready`
+con `num_sensor=0` circa ogni `1ms`.
 
 ### Controllo della temperatura
 In prima battuta provare un controllo con ventola sempre accesa, ma un proporzionale
@@ -114,6 +116,14 @@ Se si prova a terminare `sb1` mentre gli altri firmware funzionano, si noterà
 che la VCU continua richiedere una corrente all'inverter pari a quella dell'ultimo
 segnale di PPS letto. Come si potrebbe rendere safe questo codice?
 Un discorso simile si potrebbe fare per il controllo di temperatura.
+
+## Filtraggio moving-average
+La sensorboard ha due buffer di filtraggio, dove i campioni vengono accumulati e al
+momento del processamento viene effettuata la media di N degli ultimi campioni.
+In questo esempio N=2, in quanto i dati simulati sono a bassa frequenza e senza rumore.
+Su microcontrollore, la frequenza di campionamento può arrivare a svariate centinaia di kHz,
+e il segnale può avere abbastanza rumore, per cui un filtro di ordine superiore a 2 potrebbe
+essere necessario, con lo svantaggio di aumentare il delay del segnale.
 
 ## Note di stile
 ### Uso degli interi nella programmazione embedded
