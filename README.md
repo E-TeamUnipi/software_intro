@@ -15,6 +15,11 @@ a regime a 61 gradi circa. Solo la temperatura dell'acqua di raffreddamento
 
 ## Istruzioni per l'esecuzione
 
+### Setup su WSL2
+Per utilizzare i firmware virtualizzati su WSL è necessario aggiungere i moduli
+di `socketcan` alla distribuzione. Per Ubuntu/debian è possibile usare lo script
+`wsl/kernelbuilder.sh` (da eseguire dentro WSL in una shell bash).
+
 ### Compilazione
 ```
 meson setup build
@@ -156,7 +161,8 @@ a singola precisione.
 
 Nella scrittura dei float literal, è da preferire la forma `0.123f` a `0.123`, in quanto
 la seconda viene interpretata come `double` dal compilatore e vengono implicitamente aggiunti
-dei cast.
+dei cast. Allo stesso modo, si consiglia di usare le funzioni di `math.h` che lavorano sui float
+(ad esempio `sqrtf` invece di `sqrt`), oppure di usare le macro di `tgmath.h`.
 
 ### Volatile
 È abbastanza comune usare variabili globali confinate al singolo file (quindi `static`) per il
