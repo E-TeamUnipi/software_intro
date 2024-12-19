@@ -17,6 +17,7 @@ a regime a 61 gradi circa. Solo la temperatura dell'acqua di raffreddamento
 
 ### Compilazione
 ```
+meson setup build
 meson compile -C build
 ```
 
