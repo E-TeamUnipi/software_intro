@@ -21,9 +21,6 @@ void vcu_init() {
     hal_can_init();
 }
 
-void vcu_main_loop() {
-}
-
 void hal_handle_can_message(uint32_t id, const uint8_t *payload, uint8_t len) {
     switch (id) {
         case MAIN_PPS_FRAME_ID | MAIN_NODE_SB1: {

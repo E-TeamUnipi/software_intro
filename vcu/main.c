@@ -4,9 +4,7 @@
 int main() {
     vcu_init();
 
-    while (true) {
-        vcu_main_loop();
-    }
+    while (true) {}
 
     return 0;
 }

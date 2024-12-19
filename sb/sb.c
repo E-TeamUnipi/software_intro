@@ -21,6 +21,7 @@ static void handle_temp_sensor(uint8_t num_sensor, uint16_t value);
 
 static void send_pps();
 static void send_temp();
+static void update_fan_speed();
 
 static volatile uint16_t fan_speed_rpm = 0;
 
@@ -54,14 +55,6 @@ void sb_init()
 
     hal_can_init();
     hal_start_scheduler();
-}
-
-void sb_main_loop(void) {
-    if (hal_board_id() == BOARD_ID_FAN_CTRL) {
-        float duty = (float)fan_speed_rpm / max_fan_speed_rpm;
-
-        hal_set_pwm_duty((uint8_t) (100.f * duty));
-    }
 }
 
 float map(float val, float A, float B, float a, float b)
@@ -111,6 +104,7 @@ void sb_init_temp() {
 }
 void sb_init_fan_ctrl() {
     fan_speed_rpm = 0;
+    hal_scheduler_add_task(1000, update_fan_speed);
 }
 
 void hal_handle_can_message(uint32_t id, const uint8_t *data, uint8_t length) {
@@ -181,7 +175,7 @@ void send_pps(void) {
         MAIN_PPS_LENGTH);
 }
 
-static void handle_pps_sensor(uint8_t num_sensor, uint16_t value) {
+void handle_pps_sensor(uint8_t num_sensor, uint16_t value) {
     const uint16_t adc_max = (1<<10)-1;
     const float Vref = 5;
 
@@ -196,6 +190,12 @@ static void handle_pps_sensor(uint8_t num_sensor, uint16_t value) {
     }
 }
 
+void update_fan_speed(void) {
+    float duty = (float)fan_speed_rpm / max_fan_speed_rpm;
+    hal_set_pwm_duty((uint8_t) (100.f * duty));
+}
+
+
 void send_temp(void) {
     // TODO
 }
@@ -205,3 +205,4 @@ static void handle_temp_sensor(uint8_t num_sensor, uint16_t value) {
         // TODO;
     }
 }
+

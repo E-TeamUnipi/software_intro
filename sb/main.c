@@ -7,9 +7,7 @@ int main()
 {
     sb_init();
 
-    while (true) {
-        sb_main_loop();
-    }
+    while (true) {}
 
     return 0;
 }
